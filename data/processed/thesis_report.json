@@ -1,0 +1,580 @@
+[
+    {
+        "tokens": [
+            "Candidate(s):",
+            "Madhu",
+            "Aryal",
+            "Prabin",
+            "Raj",
+            "Amatya",
+            "Prashansa",
+            "Rai"
+        ],
+        "ner_tags": [
+            0,
+            1,
+            2,
+            1,
+            2,
+            2,
+            1,
+            2
+        ]
+    },
+    {
+        "tokens": [
+            "Student",
+            "ID:",
+            "206/077",
+            "207/077",
+            "208/077"
+        ],
+        "ner_tags": [
+            0,
+            0,
+            3,
+            3,
+            3
+        ]
+    },
+    {
+        "tokens": [
+            "Company:",
+            "Tribhuvan",
+            "University,",
+            "Amrit",
+            "Campus"
+        ],
+        "ner_tags": [
+            0,
+            4,
+            5,
+            5,
+            5
+        ]
+    },
+    {
+        "tokens": [
+            "Report",
+            "Supervisor:",
+            "Chhetra",
+            "Bahadur",
+            "Chhetri"
+        ],
+        "ner_tags": [
+            0,
+            0,
+            6,
+            7,
+            7
+        ]
+    },
+    {
+        "tokens": [
+            "Report",
+            "Date:",
+            "March",
+            "2024"
+        ],
+        "ner_tags": [
+            0,
+            0,
+            8,
+            9
+        ]
+    },
+    {
+        "tokens": [
+            "Candidate(s):",
+            "Anahat",
+            "Basnet",
+            "Ishan",
+            "Rai",
+            "Swastika",
+            "Banskota"
+        ],
+        "ner_tags": [
+            0,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2
+        ]
+    },
+    {
+        "tokens": [
+            "Report",
+            "ID:",
+            "5-2-410-121-2018",
+            "5-2-410-132-2018",
+            "5-2-410-159-2018"
+        ],
+        "ner_tags": [
+            0,
+            0,
+            3,
+            3,
+            3
+        ]
+    },
+    {
+        "tokens": [
+            "University:",
+            "Tribhuvan",
+            "University,",
+            "Prime",
+            "College"
+        ],
+        "ner_tags": [
+            0,
+            4,
+            5,
+            5,
+            5
+        ]
+    },
+    {
+        "tokens": [
+            "Mentor:",
+            "Unknown"
+        ],
+        "ner_tags": [
+            0,
+            6
+        ]
+    },
+    {
+        "tokens": [
+            "Submitted",
+            "on:",
+            "May",
+            "2023"
+        ],
+        "ner_tags": [
+            0,
+            0,
+            8,
+            9
+        ]
+    },
+    {
+        "tokens": [
+            "Prepared",
+            "by:",
+            "Ramila",
+            "Kumari",
+            "Shahi",
+            "Sanisha",
+            "Maharjan",
+            "Shristi",
+            "Bajracharya"
+        ],
+        "ner_tags": [
+            0,
+            0,
+            1,
+            2,
+            2,
+            1,
+            2,
+            1,
+            2
+        ]
+    },
+    {
+        "tokens": [
+            "Report",
+            "ID:",
+            "23844/076",
+            "23851/076",
+            "23853/076"
+        ],
+        "ner_tags": [
+            0,
+            0,
+            3,
+            3,
+            3
+        ]
+    },
+    {
+        "tokens": [
+            "Department:",
+            "Tribhuvan",
+            "University,",
+            "National",
+            "College",
+            "of",
+            "Computer",
+            "Studies"
+        ],
+        "ner_tags": [
+            0,
+            4,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+        ]
+    },
+    {
+        "tokens": [
+            "Guided",
+            "by:",
+            "Mr.",
+            "Yuba",
+            "Raj",
+            "Devkota"
+        ],
+        "ner_tags": [
+            0,
+            0,
+            6,
+            7,
+            7,
+            7
+        ]
+    },
+    {
+        "tokens": [
+            "Submission",
+            "Date:",
+            "18th",
+            "March",
+            "2024"
+        ],
+        "ner_tags": [
+            0,
+            0,
+            8,
+            9,
+            9
+        ]
+    },
+    {
+        "tokens": [
+            "Prepared",
+            "by:",
+            "Badal",
+            "Shakya",
+            "Prashant",
+            "Shrestha",
+            "Prajwol",
+            "Shrestha"
+        ],
+        "ner_tags": [
+            0,
+            0,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2
+        ]
+    },
+    {
+        "tokens": [
+            "Student",
+            "ID:",
+            "15520/074",
+            "15538/074",
+            "15537/074"
+        ],
+        "ner_tags": [
+            0,
+            0,
+            3,
+            3,
+            3
+        ]
+    },
+    {
+        "tokens": [
+            "Institute:",
+            "Tribhuvan",
+            "University,",
+            "Vedas",
+            "College"
+        ],
+        "ner_tags": [
+            0,
+            4,
+            5,
+            5,
+            5
+        ]
+    },
+    {
+        "tokens": [
+            "Mentor:",
+            "Mr.",
+            "Sanjiv",
+            "Udash"
+        ],
+        "ner_tags": [
+            0,
+            6,
+            7,
+            7
+        ]
+    },
+    {
+        "tokens": [
+            "Submission",
+            "Date:",
+            "April",
+            "2022"
+        ],
+        "ner_tags": [
+            0,
+            0,
+            8,
+            9
+        ]
+    },
+    {
+        "tokens": [
+            "Submitted",
+            "by:",
+            "Apil",
+            "Adhikari",
+            "Pratik",
+            "Bastola",
+            "Rabin",
+            "Pant"
+        ],
+        "ner_tags": [
+            0,
+            0,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2
+        ]
+    },
+    {
+        "tokens": [
+            "Roll",
+            "No:",
+            "270/077",
+            "209/077",
+            "210/077"
+        ],
+        "ner_tags": [
+            0,
+            0,
+            3,
+            3,
+            3
+        ]
+    },
+    {
+        "tokens": [
+            "Affiliation:",
+            "Tribhuvan",
+            "University,",
+            "Amrit",
+            "Campus"
+        ],
+        "ner_tags": [
+            0,
+            4,
+            5,
+            5,
+            5
+        ]
+    },
+    {
+        "tokens": [
+            "Supervised",
+            "by:",
+            "Bishwa",
+            "Karn"
+        ],
+        "ner_tags": [
+            0,
+            0,
+            6,
+            7
+        ]
+    },
+    {
+        "tokens": [
+            "Submitted",
+            "on:",
+            "February",
+            "2025"
+        ],
+        "ner_tags": [
+            0,
+            0,
+            8,
+            9
+        ]
+    },
+    {
+        "tokens": [
+            "Candidate(s):",
+            "Biplov",
+            "Subedi",
+            "Bishal",
+            "Bhatta",
+            "Madhav",
+            "Dhakal"
+        ],
+        "ner_tags": [
+            0,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2
+        ]
+    },
+    {
+        "tokens": [
+            "Report",
+            "ID:",
+            "23134/076",
+            "23135/076",
+            "23152/076"
+        ],
+        "ner_tags": [
+            0,
+            0,
+            3,
+            3,
+            3
+        ]
+    },
+    {
+        "tokens": [
+            "Affiliation:",
+            "Tribhuvan",
+            "University,",
+            "Amrit",
+            "Science",
+            "Campus"
+        ],
+        "ner_tags": [
+            0,
+            4,
+            5,
+            5,
+            5,
+            5
+        ]
+    },
+    {
+        "tokens": [
+            "Advisor:",
+            "Yuba",
+            "Raj",
+            "Devkota"
+        ],
+        "ner_tags": [
+            0,
+            6,
+            7,
+            7
+        ]
+    },
+    {
+        "tokens": [
+            "Report",
+            "Date:",
+            "Unknown"
+        ],
+        "ner_tags": [
+            0,
+            0,
+            8
+        ]
+    },
+    {
+        "tokens": [
+            "Student(s):",
+            "Anuj",
+            "Shrestha",
+            "Bibek",
+            "Thapa",
+            "Yash",
+            "Maharjan"
+        ],
+        "ner_tags": [
+            0,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2
+        ]
+    },
+    {
+        "tokens": [
+            "Registration",
+            "No:",
+            "20471/075",
+            "20473/075",
+            "20508/075"
+        ],
+        "ner_tags": [
+            0,
+            0,
+            3,
+            3,
+            3
+        ]
+    },
+    {
+        "tokens": [
+            "University:",
+            "Tribhuvan",
+            "University,",
+            "Prime",
+            "College"
+        ],
+        "ner_tags": [
+            0,
+            4,
+            5,
+            5,
+            5
+        ]
+    },
+    {
+        "tokens": [
+            "Guided",
+            "by:",
+            "Unknown"
+        ],
+        "ner_tags": [
+            0,
+            0,
+            6
+        ]
+    },
+    {
+        "tokens": [
+            "Submitted",
+            "on:",
+            "Baisakh",
+            "2080"
+        ],
+        "ner_tags": [
+            0,
+            0,
+            8,
+            9
+        ]
+    }
+]

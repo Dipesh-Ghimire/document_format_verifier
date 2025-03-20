@@ -1,0 +1,272 @@
+[
+    {
+        "tokens": [
+            "TRIBHUVAN",
+            "UNIVERSITY",
+            "Institute",
+            "of",
+            "Science",
+            "and",
+            "Technology"
+        ],
+        "ner_tags": [
+            4,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+        ]
+    },
+    {
+        "tokens": [
+            "Submitted",
+            "By:",
+            "Madhu",
+            "Aryal",
+            "(206/077)",
+            "Prabin",
+            "Raj",
+            "Amatya",
+            "(207/077)",
+            "Prashansa",
+            "Rai",
+            "(208/077)"
+        ],
+        "ner_tags": [
+            0,
+            0,
+            1,
+            2,
+            3,
+            1,
+            2,
+            2,
+            3,
+            1,
+            2,
+            3
+        ]
+    },
+    {
+        "tokens": [
+            "Under",
+            "the",
+            "Supervision",
+            "of",
+            "Chhetra",
+            "Bahadur",
+            "Chhetri"
+        ],
+        "ner_tags": [
+            0,
+            0,
+            0,
+            0,
+            6,
+            7,
+            7
+        ]
+    },
+    {
+        "tokens": [
+            "SUBMITTED",
+            "BY:",
+            "Anahat",
+            "Basnet",
+            "(5-2-410-121-2018)",
+            "Ishan",
+            "Rai",
+            "(5-2-410-132-2018)",
+            "Swastika",
+            "Banskota",
+            "(5-2-410-159-2018)"
+        ],
+        "ner_tags": [
+            0,
+            0,
+            1,
+            2,
+            3,
+            1,
+            2,
+            3,
+            1,
+            2,
+            3
+        ]
+    },
+    {
+        "tokens": [
+            "Tribhuvan",
+            "University",
+            "May",
+            "2023"
+        ],
+        "ner_tags": [
+            4,
+            5,
+            8,
+            9
+        ]
+    },
+    {
+        "tokens": [
+            "Submitted",
+            "By:",
+            "Ramila",
+            "Kumari",
+            "Shahi",
+            "(23844/076)",
+            "Sanisha",
+            "Maharjan",
+            "(23851/076)",
+            "Shristi",
+            "Bajracharya",
+            "(23853/076)"
+        ],
+        "ner_tags": [
+            0,
+            0,
+            1,
+            2,
+            2,
+            3,
+            1,
+            2,
+            3,
+            1,
+            2,
+            3
+        ]
+    },
+    {
+        "tokens": [
+            "Under",
+            "Supervision",
+            "of:",
+            "Mr.",
+            "Yuba",
+            "Raj",
+            "Devkota"
+        ],
+        "ner_tags": [
+            0,
+            0,
+            0,
+            6,
+            7,
+            7,
+            7
+        ]
+    },
+    {
+        "tokens": [
+            "Date:",
+            "18th",
+            "March",
+            "2024"
+        ],
+        "ner_tags": [
+            0,
+            8,
+            9,
+            9
+        ]
+    },
+    {
+        "tokens": [
+            "Declared",
+            "By:",
+            "Ramila",
+            "Kumari",
+            "Shahi",
+            "Sanisha",
+            "Maharjan",
+            "Shristi",
+            "Bajracharya"
+        ],
+        "ner_tags": [
+            0,
+            0,
+            1,
+            2,
+            2,
+            1,
+            2,
+            1,
+            2
+        ]
+    },
+    {
+        "tokens": [
+            "TU",
+            "Symbol",
+            "No:",
+            "23844/076",
+            "TU",
+            "Symbol",
+            "No.:",
+            "23851/076",
+            "TU",
+            "Symbol",
+            "No.:",
+            "23853/076"
+        ],
+        "ner_tags": [
+            0,
+            0,
+            0,
+            3,
+            0,
+            0,
+            0,
+            3,
+            0,
+            0,
+            0,
+            3
+        ]
+    },
+    {
+        "tokens": [
+            "Under",
+            "the",
+            "Supervision",
+            "of",
+            "Mr.",
+            "Sanjiv",
+            "Udash"
+        ],
+        "ner_tags": [
+            0,
+            0,
+            0,
+            0,
+            6,
+            7,
+            7
+        ]
+    },
+    {
+        "tokens": [
+            "TRIBHUVAN",
+            "UNIVERSITY",
+            "Institute",
+            "of",
+            "Science",
+            "and",
+            "Technology"
+        ],
+        "ner_tags": [
+            4,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
+        ]
+    }
+]
