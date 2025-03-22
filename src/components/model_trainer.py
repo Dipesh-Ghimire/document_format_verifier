@@ -1,5 +1,7 @@
 import os;import sys
 from dataclasses import dataclass
+from src.components.data_ingestion import DataIngestion
+from src.components.data_transformation import DataTransformation
 from src.exception import CustomException
 from src.logger import logging
 from transformers import AutoModelForTokenClassification
@@ -54,3 +56,13 @@ class ModelTrainer:
             return (self.model_trainer_config.trained_model_file_path,self.model_trainer_config.tokenizer_file_path)
         except Exception as e:
             raise CustomException(e,sys)
+
+if __name__ == "__main__":
+    data_ingestion = DataIngestion()
+    merged_data_path =data_ingestion.initiate_data_ingestion()
+
+    data_transform = DataTransformation("bert-base-uncased")
+    tokenized_train_file_path,tokenized_test_file_path = data_transform.data_transformation(merged_data_path)
+    
+    model_trainer = ModelTrainer()
+    model_trainer.initiate_model_trainer(tokenized_train_file_path,tokenized_test_file_path)
