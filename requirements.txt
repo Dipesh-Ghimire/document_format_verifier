@@ -1,2 +1,9 @@
-pandas
+transformers 
+pdfplumber 
+pytesseract 
+torch 
+torchvision 
+pillow 
+datasets 
+jupyter
 -e .

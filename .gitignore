@@ -176,3 +176,5 @@ cython_debug/
 # Custom
 logs/
 nlp_env/
+nlp_env2/
+artifacts/
