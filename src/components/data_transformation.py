@@ -24,6 +24,7 @@ class TextPreprocessor:
 
     def clean_text(self, text):
         """Remove all special characters except '/', normalize spaces, and remove new lines."""
+        logging.info("clean_text() called")
         text = text.strip()  # Remove leading/trailing spaces
         text = re.sub(r'[^a-zA-Z0-9/\s]', '', text)  # Keep only letters, numbers, and '/'
         text = re.sub(r'\s+', ' ', text)  # Replace multiple spaces with a single space
@@ -31,6 +32,7 @@ class TextPreprocessor:
 
     def convert_to_hf_format(self, data):
         """Convert raw data into Hugging Face dataset format with cleaned text and mapped labels."""
+        logging.info("convert_to_hf_format() called")
         tokenized_data = []
         for doc in data:  # Iterate over top-level list
             for entry in doc:  # Iterate over each inner list
@@ -50,6 +52,7 @@ class DataTransformer:
 
     def tokenize_and_align_labels(self, examples):
         """Tokenize input and align NER labels for BERT model."""
+        logging.info("tokenize_and_align_labels() called")
         tokenized_inputs = self.tokenizer(examples["tokens"], truncation=True, is_split_into_words=True, padding="max_length", max_length=128)
 
         all_labels = []
@@ -76,6 +79,7 @@ class DataTransformer:
 
     def transform_data(self, data):
         """Transform input data into tokenized format for BERT model training or inference."""
+        logging.info("transform_data() called")
         hf_dataset = self.preprocessor.convert_to_hf_format(data)
         transformed_dataset = hf_dataset.map(self.tokenize_and_align_labels, batched=True)
         return transformed_dataset
@@ -87,6 +91,7 @@ class DataTransformation:
 
     def data_transformation(self, merged_dataset_path: str):
         try:
+            logging.info("data_transformation() called")
             # Load dataset
             with open(merged_dataset_path, 'r') as f:
                 data = json.load(f)
@@ -104,7 +109,7 @@ class DataTransformation:
             with open(self.data_transformation_config.tokenized_test_pickle_file_path, "wb") as f:
                 pickle.dump(tokenized_datasets["test"], f)
 
-            print(f"Tokenized datasets saved as Pickle at:\n{self.data_transformation_config.tokenized_train_pickle_file_path}\n{self.data_transformation_config.tokenized_test_pickle_file_path}")
+            logging.info(f"Tokenized datasets saved as Pickle at:\n{self.data_transformation_config.tokenized_train_pickle_file_path}\n{self.data_transformation_config.tokenized_test_pickle_file_path}")
 
             return (self.data_transformation_config.tokenized_train_pickle_file_path, 
                     self.data_transformation_config.tokenized_test_pickle_file_path)
