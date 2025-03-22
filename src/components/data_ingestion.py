@@ -17,12 +17,11 @@ class DataIngestion:
     def initiate_data_ingestion(self):
         logging.info("Entered the Data Ingestion Component")
         try:
-            logging.info("Successfully read dataset as df")
             #create artifact directory
             os.makedirs(os.path.dirname(self.ingestion_config.raw_data_path),exist_ok=True)
             # Initialize an empty list to hold all the data
             merged_data = []
-
+            logging.info(f"Reading data from {self.ingestion_config.raw_data_path}")
             # Iterate over all JSON files in the annoted_dataset folder
             for filename in os.listdir(self.ingestion_config.raw_data_path):
                 if filename.endswith('.json'):
