@@ -7,6 +7,7 @@ if sys.platform == "linux" or sys.platform == "win32":
     asyncio.set_event_loop_policy(asyncio.DefaultEventLoopPolicy())
 
 # Import your ML pipeline
+from src.exception import CustomException
 from src.pipelines.format_verifier_pipeline import FormatVerifierPipeline
 from src.pipelines.metadata_extraction_pipeline import MetadataExtractionPipeline
 
@@ -155,10 +156,6 @@ if uploaded_file is not None:
                         })
                 
                 st.table(extracted_format_data)
-
-
-
-        finally:
-            # Clean up the temporary file
-            os.remove(temp_filename)
+        except CustomException as e:
+            raise CustomException(e,sys)
 
