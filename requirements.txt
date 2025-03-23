@@ -6,4 +6,5 @@ torchvision
 pillow 
 datasets 
 jupyter
+together
 -e .
