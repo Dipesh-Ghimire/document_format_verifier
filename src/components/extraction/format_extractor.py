@@ -8,7 +8,9 @@ import json
 
 def open_pdf_file(pdf_path):
     doc = fitz.open(pdf_path)
+    doc.delete_page(0)  # Remove the first page (cover page)
     return doc
+
 def table_of_content_extractor(doc):
     toc_text = ""
     toc_found = False  # Flag to track if ToC has started
@@ -122,13 +124,66 @@ def list_of_figures_extractor(pdf_path):
 
 def abbreviations_extractor(doc):
     return True
+
+# References Data Extraction
 def references_extractor(doc):
-    return True
+    references_text = ""
+    references_found = False  # Track if References section is found
+    references_list = []  # Store extracted references
+    reference_format = None
+
+    for page_num in range(len(doc)):  # Loop through pages
+        text_blocks = doc[page_num].get_text("text").split("\n")  # Extract text line by line
+
+        for line in text_blocks:
+            line = line.strip()
+
+            # Detect References section heading
+            if re.search(r"\b(References|Bibliography|Works Cited)\b", line, re.IGNORECASE):
+                references_found = True
+                continue  # Move to the next line
+
+            # If References section is found, collect reference entries
+            if references_found:
+                if re.match(r"^\[?\d+\]?", line) or re.search(r"\(\d{4}\)", line) or re.match(r"^\w+\.", line):
+                    references_list.append(line)
+
+            # Stop extraction when encountering a new section (empty line or unrelated text)
+            if references_found and line == "":
+                break
+
+    # Determine reference format
+    reference_format = detect_reference_format(references_list)
+
+    # Check citation consistency
+    consistent_format = len(set(reference_format)) == 1 if reference_format else False
+
+    return {
+        "references_formatting": {
+            "references_format": reference_format[0] if reference_format else None,
+            "citations_consistent": consistent_format
+        }
+    }
+
+def detect_reference_format(references):
+    """
+    Detect the reference format: IEEE, APA, or MLA.
+    """
+    formats_detected = []
+
+    for ref in references:
+        if re.match(r"^\[\d+\]", ref):  # IEEE format (numbered)
+            formats_detected.append("IEEE")
+        elif re.search(r"\(\d{4}\)", ref):  # APA format (year in parentheses)
+            formats_detected.append("APA")
+        elif re.match(r"^\w+\.", ref) and not re.search(r"\(\d{4}\)", ref):  # MLA format (author + title)
+            formats_detected.append("MLA")
+
+    return list(set(formats_detected))  # Return unique formats detected
 
 # Font Data Extraction
 def font_data_extractor(doc):
     # skip first page from doc
-    doc = doc[1:]
     font_sizes = []
     font_types = []
     heading_fonts = []
