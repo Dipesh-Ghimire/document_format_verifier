@@ -126,8 +126,55 @@ def references_extractor(doc):
     return True
 def font_data_extractor(doc):
     return True
+# Margin Data Extraction
 def margin_data_extractor(doc):
-    return True
+    margin_values = {"left": [], "right": [], "top": [], "bottom": []}
+
+    for page in doc:
+        page_width, page_height = page.rect.width, page.rect.height  # Page size in points
+        text_blocks = page.get_text("dict")["blocks"]
+
+        # Initialize extreme values for text placement
+        leftmost = page_width
+        rightmost = 0
+        topmost = page_height
+        bottommost = 0
+
+        for block in text_blocks:
+            if "lines" in block:
+                for line in block["lines"]:
+                    x0, y0, x1, y1 = line["bbox"]  # Bounding box (left, top, right, bottom)
+                    leftmost = min(leftmost, x0)
+                    rightmost = max(rightmost, x1)
+                    topmost = min(topmost, y0)
+                    bottommost = max(bottommost, y1)
+
+        # Calculate margins in inches (1 inch = 72 points)
+        left_margin = round(leftmost / 72, 2)
+        right_margin = round((page_width - rightmost) / 72, 2)
+        top_margin = round(topmost / 72, 2)
+        bottom_margin = round((page_height - bottommost) / 72, 2)
+
+        margin_values["left"].append(left_margin)
+        margin_values["right"].append(right_margin)
+        margin_values["top"].append(top_margin)
+        margin_values["bottom"].append(bottom_margin)
+
+    # Compute average margins across pages
+    avg_left_margin = round(sum(margin_values["left"]) / len(margin_values["left"]), 2)
+    avg_right_margin = round(sum(margin_values["right"]) / len(margin_values["right"]), 2)
+    avg_top_margin = round(sum(margin_values["top"]) / len(margin_values["top"]), 2)
+    avg_bottom_margin = round(sum(margin_values["bottom"]) / len(margin_values["bottom"]), 2)
+
+    return {
+        "margins": {
+            "left_margin_inch": round(avg_left_margin),
+            "right_margin_inch": round(avg_right_margin),
+            "top_margin_inch": round(avg_top_margin),
+            "bottom_margin_inch": round(avg_bottom_margin)
+        }
+    }
+
 # Text Alignment Extraction
 def text_alignment_extractor(doc):
     alignment_counts = []  # Store detected alignments
