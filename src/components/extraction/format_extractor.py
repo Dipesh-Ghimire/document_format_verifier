@@ -2,6 +2,7 @@ import fitz
 from src.exception import CustomException
 from src.logger import logging
 import os;import sys
+import re
 
 def open_pdf_file(pdf_path):
     doc = fitz.open(pdf_path)
@@ -65,8 +66,58 @@ def table_of_content_extractor(doc):
         }
     }
 
-def list_of_figures_extractor(doc):
-    return True
+def list_of_figures_extractor(pdf_path):
+    doc = fitz.open(pdf_path)
+    lof_text = ""
+    lof_found = False  # Flag to track if LoF has started
+    figure_caption_sizes = set()  # Store unique font sizes of figure captions
+    lof_heading_size = None  # Track LoF heading font size
+
+    # Iterate through first few pages (LoF is usually at the beginning)
+    for page_num in range(min(10, len(doc))):  # Scan first 10 pages
+        text_blocks = doc[page_num].get_text("dict")["blocks"]
+
+        for block in text_blocks:
+            if "lines" in block:
+                for line in block["lines"]:
+                    for span in line["spans"]:
+                        font_size = round(span["size"])  # Extract font size
+                        line_text = span["text"].strip()
+
+                        # Detect LoF heading (ensuring we only capture the first occurrence)
+                        if re.search(r"\b(List\s*of\s*Figures|Figures|Figure Index)\b", line_text, re.IGNORECASE):
+                            if not lof_found:  # Only set once
+                                lof_found = True  
+                                lof_heading_size = font_size  # Store LoF heading font size
+                            lof_text += line_text + "\n"
+                            continue
+
+                        # If LoF has started, keep extracting until a matching font size is detected
+                        if lof_found:
+                            # Identify figure captions (likely smaller font size than heading)
+                            if re.match(r"^(Figure|Fig\.|Table)\s+\d+[:.\s]", line_text):  
+                                figure_caption_sizes.add(font_size)  # Store caption font size
+
+                            # Stop when encountering a section heading of the same size as the LoF heading,
+                            # BUT only if we have already captured some figure captions.
+                            if font_size == lof_heading_size and figure_caption_sizes:
+                                return {
+                                    "list_of_figures": {
+                                        "lof_present": True,
+                                        "figure_caption_font_size": max(figure_caption_sizes)  # Return largest detected caption font
+                                    }
+                                }
+
+                            lof_text += line_text + "\n"
+
+    # If no LoF found, return False
+    return {
+        "list_of_figures": {
+            "lof_present": False,
+            "figure_caption_font_size": None
+        }
+    }
+
 def abbreviations_extractor(doc):
     return True
 def references_extractor(doc):
