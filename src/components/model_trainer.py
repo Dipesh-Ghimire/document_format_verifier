@@ -10,8 +10,8 @@ from transformers import DataCollatorForTokenClassification, Trainer
 
 @dataclass
 class ModelTrainerConfig:
-    trained_model_file_path = os.path.join("artifacts","trained_model")
-    tokenizer_file_path = os.path.join("artifacts","tokenizer")
+    trained_model_file_path = os.path.join("artifacts","fine_tuned_bert_ner")
+    tokenizer_file_path = os.path.join("artifacts","fine_tuned_bert_ner")
 
 class ModelTrainer:
     def __init__(self):
