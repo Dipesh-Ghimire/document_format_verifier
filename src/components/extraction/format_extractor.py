@@ -130,6 +130,7 @@ def margin_data_extractor(doc):
     return True
 def text_alignment_extractor(doc):
     return True
+# Figure Data Extraction
 def figure_data_extractor(doc):
     page_width = doc[0].rect.width  # Get the width of the first page for alignment checks
 
@@ -223,7 +224,103 @@ def most_frequent(lst):
         return None
     return Counter(lst).most_common(1)[0][0]
 
+# Table Data Extraction
 def table_data_extractor(doc):
-    return True
+    page_width = doc[0].rect.width  # Get the width of the first page for alignment checks
+
+    table_placements = []  # Store table alignment
+    caption_positions = []  # Store caption positions
+    caption_font_sizes = []  # Store caption font sizes
+
+    for page_num in range(len(doc)):  # Loop through all pages
+        page = doc[page_num]
+        tables = find_tables(page)  # Find potential table bounding boxes
+
+        for table_bbox in tables:
+            # Determine table alignment
+            table_x0, table_y0, table_x1, table_y1 = table_bbox
+            table_width = table_x1 - table_x0
+            page_center_x = page_width / 2
+
+            if abs((table_x0 + table_x1) / 2 - page_center_x) < table_width * 0.1:
+                placement = "center"
+            elif table_x0 < page_width * 0.3:
+                placement = "left"
+            else:
+                placement = "right"
+
+            # Find table caption (text near the table)
+            table_caption, caption_font_size, caption_position = find_table_caption(page, table_bbox)
+
+            if caption_font_size:
+                caption_font_sizes.append(caption_font_size)
+
+            if placement:
+                table_placements.append(placement)
+
+            if caption_position:
+                caption_positions.append(caption_position)
+
+    # Determine most frequent values
+    most_common_placement = most_frequent(table_placements)
+    most_common_caption_position = most_frequent(caption_positions)
+    most_common_caption_font_size = most_frequent(caption_font_sizes)
+
+    return {
+        "table_placement": {
+            "table_caption_font_size": most_common_caption_font_size,
+            "table_placement": most_common_placement,
+            "table_caption_position": most_common_caption_position
+        }
+    }
+
+def find_tables(page):
+    """
+    Identify potential tables by detecting large structured text blocks.
+    - Looks for multiple consecutive text lines forming a structured shape.
+    """
+    table_bboxes = []
+
+    for block in page.get_text("dict")["blocks"]:
+        if "lines" in block and len(block["lines"]) > 2:  # More than 2 rows indicates a possible table
+            bbox = block["bbox"]
+            table_bboxes.append(bbox)
+
+    return table_bboxes
+
+def find_table_caption(page, bbox):
+    """
+    Find the caption text near the table.
+    - If text appears *below* the table, return "below"
+    - If text appears *above* the table, return "above"
+    """
+    table_x0, table_y0, table_x1, table_y1 = bbox
+    caption_text = None
+    caption_font_size = None
+    caption_position = None
+
+    for block in page.get_text("dict")["blocks"]:
+        if "lines" in block:
+            for line in block["lines"]:
+                for span in line["spans"]:
+                    text_y0 = line["bbox"][1]  # Get Y-position of text
+                    font_size = round(span["size"])  # Extract font size
+                    line_text = span["text"].strip()
+
+                    # Check if text is directly below the table
+                    if table_y1 < text_y0 < table_y1 + font_size * 3:
+                        caption_text = line_text
+                        caption_font_size = font_size
+                        caption_position = "below"
+                        return caption_text, caption_font_size, caption_position
+
+                    # Check if text is directly above the table
+                    if table_y0 - font_size * 3 < text_y0 < table_y0:
+                        caption_text = line_text
+                        caption_font_size = font_size
+                        caption_position = "above"
+                        return caption_text, caption_font_size, caption_position
+
+    return caption_text, caption_font_size, caption_position
 
     
