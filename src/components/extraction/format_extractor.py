@@ -3,6 +3,8 @@ from src.exception import CustomException
 from src.logger import logging
 import os;import sys
 import re
+from collections import Counter
+import json
 
 def open_pdf_file(pdf_path):
     doc = fitz.open(pdf_path)
@@ -129,7 +131,98 @@ def margin_data_extractor(doc):
 def text_alignment_extractor(doc):
     return True
 def figure_data_extractor(doc):
-    return True
+    page_width = doc[0].rect.width  # Get the width of the first page for alignment checks
+
+    figure_placements = []  # Store placement data
+    caption_positions = []  # Store caption positions
+    caption_font_sizes = []  # Store caption font sizes
+
+    for page_num in range(len(doc)):  # Loop through all pages
+        page = doc[page_num]
+        images = page.get_images(full=True)  # Extract all images (figures)
+
+        for img_index, img in enumerate(images):
+            xref = img[0]  # Get image reference
+            bbox = page.get_image_rects(xref)[0]  # Get bounding box of image (figure)
+
+            # Determine figure alignment
+            fig_x0, fig_y0, fig_x1, fig_y1 = bbox
+            fig_width = fig_x1 - fig_x0
+            page_center_x = page_width / 2
+
+            if abs((fig_x0 + fig_x1) / 2 - page_center_x) < fig_width * 0.1:
+                placement = "center"
+            elif fig_x0 < page_width * 0.3:
+                placement = "left"
+            else:
+                placement = "right"
+
+            # Find figure caption (text near the figure)
+            figure_caption, caption_font_size, caption_position = find_figure_caption(page, bbox)
+
+            if caption_font_size:
+                caption_font_sizes.append(caption_font_size)
+
+            if placement:
+                figure_placements.append(placement)
+
+            if caption_position:
+                caption_positions.append(caption_position)
+
+    # Determine most frequent values
+    most_common_placement = most_frequent(figure_placements)
+    most_common_caption_position = most_frequent(caption_positions)
+    most_common_caption_font_size = most_frequent(caption_font_sizes)
+
+    return {
+        "figure_placement": {
+            "figure_caption_font_size": most_common_caption_font_size,
+            "figure_placement": most_common_placement,
+            "figure_caption_position": most_common_caption_position
+        }
+    }
+
+def find_figure_caption(page, bbox):
+    """
+    Find the caption text near the figure.
+    - If text appears *below* the figure, return "below"
+    - If text appears *above* the figure, return "above"
+    """
+    fig_x0, fig_y0, fig_x1, fig_y1 = bbox
+    caption_text = None
+    caption_font_size = None
+    caption_position = None
+
+    for block in page.get_text("dict")["blocks"]:
+        if "lines" in block:
+            for line in block["lines"]:
+                for span in line["spans"]:
+                    text_y0 = line["bbox"][1]  # Get Y-position of text
+                    font_size = round(span["size"])  # Extract font size
+                    line_text = span["text"].strip()
+
+                    # Check if text is directly below the figure
+                    if fig_y1 < text_y0 < fig_y1 + font_size * 3:
+                        caption_text = line_text
+                        caption_font_size = font_size
+                        caption_position = "below"
+                        return caption_text, caption_font_size, caption_position
+
+                    # Check if text is directly above the figure
+                    if fig_y0 - font_size * 3 < text_y0 < fig_y0:
+                        caption_text = line_text
+                        caption_font_size = font_size
+                        caption_position = "above"
+                        return caption_text, caption_font_size, caption_position
+
+    return caption_text, caption_font_size, caption_position
+
+def most_frequent(lst):
+    """Find the most common element in a list"""
+    if not lst:
+        return None
+    return Counter(lst).most_common(1)[0][0]
+
 def table_data_extractor(doc):
     return True
 
