@@ -128,8 +128,46 @@ def font_data_extractor(doc):
     return True
 def margin_data_extractor(doc):
     return True
+# Text Alignment Extraction
 def text_alignment_extractor(doc):
-    return True
+    alignment_counts = []  # Store detected alignments
+
+    for page_num in range(len(doc)):  # Loop through all pages
+        page = doc[page_num]
+        text_blocks = page.get_text("dict")["blocks"]
+
+        for block in text_blocks:
+            if "lines" in block:
+                left_margins = []
+                right_margins = []
+
+                for line in block["lines"]:
+                    x0, _, x1, _ = line["bbox"]  # Get left & right positions of the line
+                    left_margins.append(x0)
+                    right_margins.append(x1)
+
+                # Compute alignment by analyzing variation in margins
+                left_variation = max(left_margins) - min(left_margins) if left_margins else 0
+                right_variation = max(right_margins) - min(right_margins) if right_margins else 0
+
+                if left_variation < 5 and right_variation < 5:
+                    alignment_counts.append("Justified")
+                elif left_variation < 5:
+                    alignment_counts.append("Left")
+                elif right_variation < 5:
+                    alignment_counts.append("Right")
+                else:
+                    alignment_counts.append("Mixed")
+
+    # Determine most frequent text alignment
+    most_common_alignment = most_frequent(alignment_counts)
+
+    return {
+        "text_alignment": {
+            "text_alignment": most_common_alignment
+        }
+    }
+
 # Figure Data Extraction
 def figure_data_extractor(doc):
     page_width = doc[0].rect.width  # Get the width of the first page for alignment checks
