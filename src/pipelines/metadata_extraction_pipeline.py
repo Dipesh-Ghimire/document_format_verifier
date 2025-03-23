@@ -3,7 +3,7 @@ import sys
 import pandas as pd
 from src.exception import CustomException
 from transformers import pipeline, AutoTokenizer, AutoModelForTokenClassification
-from src.pipelines.utils import convert_ner_results, clean_pdf_text, extract_first_page_text
+from src.pipelines.utils import convert_ner_results, clean_pdf_text, extract_first_page_text, capitalize_metadata
 from src.components.extraction.utils import extract_metadata_llama
 
 
@@ -32,9 +32,8 @@ class MetadataExtractionPipeline:
                                         'Organization': 'tribhuvan university', 
                                         'Supervisor': 'mr. nabaraj bahadur negi', 
                                         'Submission Date': 'february 2025'}
-            bert_structured_metadata = convert_ner_results(bert_result)
-            print(bert_structured_metadata)
-
+            bert_metadata = convert_ner_results(bert_result)
+            bert_structured_metadata = capitalize_metadata(bert_metadata)
             # Extract metadata using Llama 2
             #llama_metadata = extract_metadata_llama(text)
             llama_metadata ={"Metadata": {

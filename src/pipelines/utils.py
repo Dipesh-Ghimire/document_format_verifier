@@ -132,7 +132,15 @@ def convert_ner_results(ner_results):
         extracted_metadata["Submission Date"] = date_text.strip()
 
     return extracted_metadata
-
+def capitalize_metadata(metadata_dict):
+    def capitalize_value(value):
+        if isinstance(value, str):
+            return value.title()  # Capitalizes first letter of each word
+        elif isinstance(value, set):
+            return {v.title() for v in value}  # Apply capitalization to each set element
+        return value  # Return unchanged for other types
+    
+    return {key: capitalize_value(value) for key, value in metadata_dict.items()}
 if __name__ == "__main__":
     pdf_path = os.path.join(os.getcwd(),'dataset',"pdfs","toxicMeter.pdf")
     pdf_text = extract_first_page_text(pdf_path)
