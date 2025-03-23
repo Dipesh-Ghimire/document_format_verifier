@@ -124,8 +124,45 @@ def abbreviations_extractor(doc):
     return True
 def references_extractor(doc):
     return True
+
+# Font Data Extraction
 def font_data_extractor(doc):
-    return True
+    # skip first page from doc
+    doc = doc[1:]
+    font_sizes = []
+    font_types = []
+    heading_fonts = []
+    
+    for page in doc:
+        text_blocks = page.get_text("dict")["blocks"]
+        
+        for block in text_blocks:
+            if "lines" in block:
+                for line in block["lines"]:
+                    for span in line["spans"]:
+                        font_size = round(span["size"])  # Extract font size
+                        font_type = span["font"]  # Extract font type
+                        font_sizes.append(font_size)
+                        font_types.append(font_type)
+
+    # Identify the most common font type & size for body text
+    most_common_body_font = most_frequent(font_types)
+    most_common_body_size = most_frequent(font_sizes)
+
+    # Identify the most common font & size for headings (largest text)
+    max_font_size = max(font_sizes) if font_sizes else None
+    heading_fonts = [font for font, size in zip(font_types, font_sizes) if size == max_font_size]
+    most_common_heading_font = most_frequent(heading_fonts)
+
+    return {
+        "font_type_size": {
+            "body_font_type": most_common_body_font,
+            "body_font_size": most_common_body_size,
+            "heading_font_type": most_common_heading_font,
+            "heading_font_size": max_font_size
+        }
+    }
+
 # Margin Data Extraction
 def margin_data_extractor(doc):
     margin_values = {"left": [], "right": [], "top": [], "bottom": []}
