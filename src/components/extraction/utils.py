@@ -1,3 +1,4 @@
+import re
 from together import Together
 import json
 
@@ -22,7 +23,7 @@ def extract_metadata_llama(text)->dict:
     Return just the response in JSON format with:
     1. Metadata: (Author, Organization, Roll Number, Supervisor, Submission Date)
     Note(if there are multiple values for any, you can use an array inside.)
-    2. Do not reply any other information, just the json response.
+    2. Do not reply any other information, just the valid json response.
     """
     
     # Call Llama 2 on Together AI
@@ -43,9 +44,14 @@ def extract_metadata_llama(text)->dict:
     for token in response:
         if hasattr(token, 'choices') and token.choices:
             output += token.choices[0].delta.content
-    
+    # Extract JSON content (find the first occurrence of `{` and extract everything from there)
+    match = re.search(r'\{.*', output, re.DOTALL)
+    cleaned_output = ""
+    if match:
+        cleaned_output = match.group(0)  # Extract the JSON part
+        cleaned_output = re.sub(r'```$', '', cleaned_output).strip()
     try:
-        json_output = json.loads(output)  # Convert response to JSON format
+        json_output = json.loads(cleaned_output)  # Convert response to JSON format
         if isinstance(json_output, dict):
             return json_output  # Return structured JSON output
         else:
