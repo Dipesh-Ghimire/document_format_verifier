@@ -141,6 +141,7 @@ def capitalize_metadata(metadata_dict):
         return value  # Return unchanged for other types
     
     return {key: capitalize_value(value) for key, value in metadata_dict.items()}
+
 if __name__ == "__main__":
     pdf_path = os.path.join(os.getcwd(),'dataset',"pdfs","toxicMeter.pdf")
     pdf_text = extract_first_page_text(pdf_path)
