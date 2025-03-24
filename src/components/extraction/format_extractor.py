@@ -70,8 +70,7 @@ def table_of_content_extractor(doc):
         }
     }
 
-def list_of_figures_extractor(pdf_path):
-    doc = fitz.open(pdf_path)
+def list_of_figures_extractor(doc):
     lof_text = ""
     lof_found = False  # Flag to track if LoF has started
     figure_caption_sizes = set()  # Store unique font sizes of figure captions
@@ -122,8 +121,50 @@ def list_of_figures_extractor(pdf_path):
         }
     }
 
+# Abbreviations Data Extraction
 def abbreviations_extractor(doc):
-    return True
+    abbreviations = []  # Store extracted abbreviations
+    abbreviations_found = False  # Track if we are in the abbreviations list
+
+    for page_num in range(min(15, len(doc))):  # Scan first 15 pages
+        text_blocks = doc[page_num].get_text("text").split("\n")  # Extract text line by line
+        lines = [line.strip() for line in text_blocks if line.strip()]  # Remove empty lines
+
+        for line in lines:
+            # Detect Abbreviations heading
+            if re.search(r"\b(Abbreviations|List of Abbreviations|Acronyms)\b", line, re.IGNORECASE):
+                abbreviations_found = True  # Start collecting abbreviations
+                continue  # Move to the next line
+
+            # If in abbreviations section, extract valid abbreviation-long form pairs
+            if abbreviations_found:
+                match = re.match(r"^([A-Z0-9]{2,})\s*[-–—:]\s*(.+)$", line)  # Abbreviation - Long form
+                if match:
+                    abbreviations.append(match.group(1))  # Store the abbreviation
+                else:
+                    # If a capitalized word appears without a valid format, stop extraction (end of section)
+                    if re.match(r"^[A-Z\s]+$", line) and len(line.split()) <= 5:
+                        break
+
+    # Determine sorting order
+    abbreviations_sorted = check_sorting_order(abbreviations)
+    print(abbreviations)
+    return {
+        "abbreviations_section": {
+            "abbreviations_section_present": True if abbreviations else False,
+            "abbreviations_sorted": abbreviations_sorted
+        }
+    }
+
+def check_sorting_order(abbreviations):
+    """Determine if abbreviations are sorted in ascending, descending, or no order."""
+    if abbreviations == sorted(abbreviations):
+        return "asc"
+    elif abbreviations == sorted(abbreviations, reverse=True):
+        return "desc"
+    else:
+        return "none"
+
 
 # References Data Extraction
 def references_extractor(doc):
