@@ -35,15 +35,15 @@ class MetadataExtractionPipeline:
             bert_metadata = convert_ner_results(bert_result)
             bert_structured_metadata = capitalize_metadata(bert_metadata)
             # Extract metadata using Llama 2
-            #llama_metadata = extract_metadata_llama(text)
-            llama_metadata ={"Metadata": {
-                                "Author": ["Dipesh Ghimire", "Rajesh Adhikari", "Sijan B.K."],
-                                "Organization": ["Department of Information Technology", "Amrit Campus Lainchaur, Kathmandu"],
-                                "Roll Number": ["199/077", "212/077", "223/077"],
-                                "Supervisor": ["Mr. Nabaraj Bahadur Negi"],
-                                "Submission Date": ["February 2025"]
-                                        }
-                            }
+            llama_metadata = extract_metadata_llama(cleaned_text)
+            # llama_metadata ={"Metadata": {
+            #                     "Author": ["Dipesh Ghimire", "Rajesh Adhikari", "Sijan B.K."],
+            #                     "Organization": ["Department of Information Technology", "Amrit Campus Lainchaur, Kathmandu"],
+            #                     "Roll Number": ["199/077", "212/077", "223/077"],
+            #                     "Supervisor": ["Mr. Nabaraj Bahadur Negi"],
+            #                     "Submission Date": ["February 2025"]
+            #                             }
+            #                 }
             
             return (bert_structured_metadata,llama_metadata)
         except Exception as e:
