@@ -7,10 +7,10 @@ This project implements a **Document Format Verifier**, which analyzes text-base
 
 ## **Modular and End-to-End Pipeline-based ML Architecture**
 This project follows a **Modular and Pipeline-based ML Architecture**, ensuring efficiency in **Machine Learning workflows**:
+- **Adaptability for Fine-Tuning**: Since the **BERT model** was fine-tuned on a small annotated dataset, users seeking higher accuracy can provide their own dataset and re-execute the **training pipeline** to optimize performance for their specific use case.
 - **Scalability**: The architecture allows seamless integration of new ML models, metadata extraction techniques, or formatting rules without affecting existing components.
 - **Maintainability**: The structured separation of ML pipelines, including **data ingestion, preprocessing, training, and inference**, ensures that modifications to one stage do not disrupt the entire system.
-- **Reusability**: Individual ML components (such as the **BERT-based metadata extraction** and **format verification** models) can be reused across different projects or datasets with minimal modifications.
-- **Adaptability for Fine-Tuning**: Since the **BERT model** was fine-tuned on a small annotated dataset, users seeking higher accuracy can provide their own dataset and re-execute the **training pipeline** to optimize performance for their specific use case.
+- **Reusability**: Individual ML components (such as the **BERT-based metadata extraction**) can be reused across different projects or datasets with minimal modifications.
 - **Production-Readiness**: Logging, exception handling, and modularized ML components make the system **deployment-ready** for real-world applications, supporting both research and practical use cases.
 
 ---
@@ -28,10 +28,6 @@ document_format_verifier/
 │   ├── tokenized_train_data.pkl      # Tokenized training dataset
 │── dataset/                          # Contains datasets for training
 │   ├── annoted_dataset/              # Labeled dataset for metadata extraction
-│   │   ├── academic_report.json
-│   │   ├── corporate_report.json
-│   │   ├── custom.json
-│   │   ├── thesis_report.json
 │   ├── pdfs/                         # Sample PDFs for testing
 │── LICENSE                           # Project license
 │── notebooks/                        # Jupyter Notebooks for experimentation
