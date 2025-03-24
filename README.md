@@ -5,12 +5,14 @@ This project implements a **Document Format Verifier**, which analyzes text-base
 
 ---
 
-## **Modular and Pipeline-based ML Architecture**
-This project follows a **Modular and Pipeline-based ML Architecture**, which offers several advantages:
-- **Scalability**: New functionalities, such as additional metadata extraction techniques or formatting rules, can be added without affecting the existing codebase.
-- **Maintainability**: The structured separation of concerns ensures that updates to one component (e.g., data ingestion, model training) do not disrupt other parts of the system.
-- **Reusability**: The modular approach allows different components (e.g., metadata extraction and format verification) to be reused in other projects with minimal modifications.
-- **Production-Readiness**: Logging, exception handling, and model management are designed to support deployment in real-world scenarios.
+## **Modular and End-to-End Pipeline-based ML Architecture**
+This project follows a **Modular and Pipeline-based ML Architecture**, ensuring efficiency in **Machine Learning workflows**:
+- **Scalability**: The architecture allows seamless integration of new ML models, metadata extraction techniques, or formatting rules without affecting existing components.
+- **Maintainability**: The structured separation of ML pipelines, including **data ingestion, preprocessing, training, and inference**, ensures that modifications to one stage do not disrupt the entire system.
+- **Reusability**: Individual ML components (such as the **BERT-based metadata extraction** and **format verification** models) can be reused across different projects or datasets with minimal modifications.
+- **Adaptability for Fine-Tuning**: Since the **BERT model** was fine-tuned on a small annotated dataset, users seeking higher accuracy can provide their own dataset and re-execute the **training pipeline** to optimize performance for their specific use case.
+- **Production-Readiness**: Logging, exception handling, and modularized ML components make the system **deployment-ready** for real-world applications, supporting both research and practical use cases.
+
 ---
 
 ## **Project Structure**
